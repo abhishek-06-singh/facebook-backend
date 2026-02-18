@@ -1,0 +1,565 @@
+﻿{
+  "info": {
+    "name": "Social Media Backend API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000/api" },
+    { "key": "token", "value": "REPLACE_WITH_JWT" },
+    { "key": "userId", "value": "REPLACE_ID" },
+    { "key": "postId", "value": "REPLACE_ID" },
+    { "key": "commentId", "value": "REPLACE_ID" },
+    { "key": "conversationId", "value": "REPLACE_ID" },
+    { "key": "notificationId", "value": "REPLACE_ID" },
+    { "key": "storyId", "value": "REPLACE_ID" }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      { "key": "token", "value": "{{token}}", "type": "string" }
+    ]
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Jane Doe\",\n  \"email\": \"jane@example.com\",\n  \"password\": \"Password123!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "register"]
+            }
+          },
+          "response": [{ "name": "Success", "originalRequest": {}, "status": "OK", "code": 200, "body": "{\n  \"success\": true\n}" }]
+        },
+        {
+          "name": "Login",
+          "request": {
+            "auth": { "type": "noauth" },
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"jane@example.com\",\n  \"password\": \"Password123!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "login"]
+            }
+          },
+          "response": [{ "name": "Success", "originalRequest": {}, "status": "OK", "code": 200, "body": "{\n  \"success\": true\n}" }]
+        },
+        {
+          "name": "Get Me",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/auth/me",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth", "me"]
+            }
+          },
+          "response": [{ "name": "Success", "originalRequest": {}, "status": "OK", "code": 200, "body": "{\n  \"success\": true\n}" }]
+        }
+      ]
+    },
+    {
+      "name": "Posts",
+      "item": [
+        {
+          "name": "Create Post",
+          "request": {
+            "method": "POST",
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                { "key": "text", "value": "Hello world", "type": "text" },
+                { "key": "media", "type": "file" }
+              ]
+            },
+            "url": {
+              "raw": "{{baseUrl}}/posts",
+              "host": ["{{baseUrl}}"],
+              "path": ["posts"]
+            }
+          },
+          "response": [{ "name": "Success", "originalRequest": {}, "status": "Created", "code": 201, "body": "{\n  \"success\": true\n}" }]
+        },
+        {
+          "name": "Get Posts",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/posts?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["posts"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" }
+              ]
+            }
+          },
+          "response": [{ "name": "Success", "originalRequest": {}, "status": "OK", "code": 200, "body": "{\n  \"success\": true\n}" }]
+        },
+        {
+          "name": "Get Posts By User",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/posts/user/{{userId}}?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["posts", "user", "{{userId}}"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" }
+              ]
+            }
+          },
+          "response": [{ "name": "Success", "originalRequest": {}, "status": "OK", "code": 200, "body": "{\n  \"success\": true\n}" }]
+        },
+        {
+          "name": "Get Post",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/posts/{{postId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["posts", "{{postId}}"]
+            }
+          },
+          "response": [{ "name": "Success", "originalRequest": {}, "status": "OK", "code": 200, "body": "{\n  \"success\": true\n}" }]
+        },
+        {
+          "name": "Update Post",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"text\": \"Updated post\",\n  \"privacy\": \"public\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/posts/{{postId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["posts", "{{postId}}"]
+            }
+          },
+          "response": [{ "name": "Success", "originalRequest": {}, "status": "OK", "code": 200, "body": "{\n  \"success\": true\n}" }]
+        },
+        {
+          "name": "Delete Post",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/posts/{{postId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["posts", "{{postId}}"]
+            }
+          },
+          "response": [{ "name": "Success", "originalRequest": {}, "status": "OK", "code": 200, "body": "{\n  \"success\": true\n}" }]
+        }
+      ]
+    },
+    {
+      "name": "Feed",
+      "item": [
+        {
+          "name": "Get Feed",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/feed?limit=10&cursorCreatedAt=&cursorId=",
+              "host": ["{{baseUrl}}"],
+              "path": ["feed"],
+              "query": [
+                { "key": "limit", "value": "10" },
+                { "key": "cursorCreatedAt", "value": "" },
+                { "key": "cursorId", "value": "" }
+              ]
+            }
+          },
+          "response": [{ "name": "Success", "originalRequest": {}, "status": "OK", "code": 200, "body": "{\n  \"success\": true\n}" }]
+        },
+        {
+          "name": "Get Feed Overview",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/feed/overview?limit=10&cursorCreatedAt=&cursorId=",
+              "host": ["{{baseUrl}}"],
+              "path": ["feed", "overview"],
+              "query": [
+                { "key": "limit", "value": "10" },
+                { "key": "cursorCreatedAt", "value": "" },
+                { "key": "cursorId", "value": "" }
+              ]
+            }
+          },
+          "response": [{ "name": "Success", "originalRequest": {}, "status": "OK", "code": 200, "body": "{\n  \"success\": true\n}" }]
+        }
+      ]
+    },
+    {
+      "name": "Follows",
+      "item": [
+        {
+          "name": "Follow User",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/follows/{{userId}}/follow",
+              "host": ["{{baseUrl}}"],
+              "path": ["follows", "{{userId}}", "follow"]
+            }
+          },
+          "response": [{ "name": "Success", "originalRequest": {}, "status": "OK", "code": 200, "body": "{\n  \"success\": true\n}" }]
+        },
+        {
+          "name": "Unfollow User",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/follows/{{userId}}/unfollow",
+              "host": ["{{baseUrl}}"],
+              "path": ["follows", "{{userId}}", "unfollow"]
+            }
+          },
+          "response": [{ "name": "Success", "originalRequest": {}, "status": "OK", "code": 200, "body": "{\n  \"success\": true\n}" }]
+        },
+        {
+          "name": "Get Followers",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/follows/{{userId}}/followers?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["follows", "{{userId}}", "followers"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" }
+              ]
+            }
+          },
+          "response": [{ "name": "Success", "originalRequest": {}, "status": "OK", "code": 200, "body": "{\n  \"success\": true\n}" }]
+        },
+        {
+          "name": "Get Following",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/follows/{{userId}}/following?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["follows", "{{userId}}", "following"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" }
+              ]
+            }
+          },
+          "response": [{ "name": "Success", "originalRequest": {}, "status": "OK", "code": 200, "body": "{\n  \"success\": true\n}" }]
+        }
+      ]
+    },
+    {
+      "name": "Notifications",
+      "item": [
+        {
+          "name": "Get Notifications",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/notifications?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["notifications"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" }
+              ]
+            }
+          },
+          "response": [{ "name": "Success", "originalRequest": {}, "status": "OK", "code": 200, "body": "{\n  \"success\": true\n}" }]
+        },
+        {
+          "name": "Mark Notification Read",
+          "request": {
+            "method": "PATCH",
+            "url": {
+              "raw": "{{baseUrl}}/notifications/{{notificationId}}/read",
+              "host": ["{{baseUrl}}"],
+              "path": ["notifications", "{{notificationId}}", "read"]
+            }
+          },
+          "response": [{ "name": "Success", "originalRequest": {}, "status": "OK", "code": 200, "body": "{\n  \"success\": true\n}" }]
+        },
+        {
+          "name": "Mark All Notifications Read",
+          "request": {
+            "method": "PATCH",
+            "url": {
+              "raw": "{{baseUrl}}/notifications/read-all",
+              "host": ["{{baseUrl}}"],
+              "path": ["notifications", "read-all"]
+            }
+          },
+          "response": [{ "name": "Success", "originalRequest": {}, "status": "OK", "code": 200, "body": "{\n  \"success\": true\n}" }]
+        }
+      ]
+    },
+    {
+      "name": "Messages",
+      "item": [
+        {
+          "name": "Send Message",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"receiverId\": \"{{userId}}\",\n  \"text\": \"Hello\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/messages",
+              "host": ["{{baseUrl}}"],
+              "path": ["messages"]
+            }
+          },
+          "response": [{ "name": "Success", "originalRequest": {}, "status": "Created", "code": 201, "body": "{\n  \"success\": true\n}" }]
+        },
+        {
+          "name": "Get Messages",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/messages/{{conversationId}}?limit=20&cursorCreatedAt=&cursorId=",
+              "host": ["{{baseUrl}}"],
+              "path": ["messages", "{{conversationId}}"],
+              "query": [
+                { "key": "limit", "value": "20" },
+                { "key": "cursorCreatedAt", "value": "" },
+                { "key": "cursorId", "value": "" }
+              ]
+            }
+          },
+          "response": [{ "name": "Success", "originalRequest": {}, "status": "OK", "code": 200, "body": "{\n  \"success\": true\n}" }]
+        },
+        {
+          "name": "Mark Conversation Read",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/messages/{{conversationId}}/read",
+              "host": ["{{baseUrl}}"],
+              "path": ["messages", "{{conversationId}}", "read"]
+            }
+          },
+          "response": [{ "name": "Success", "originalRequest": {}, "status": "OK", "code": 200, "body": "{\n  \"success\": true\n}" }]
+        }
+      ]
+    },
+    {
+      "name": "Conversations",
+      "item": [
+        {
+          "name": "Get Conversations",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/conversations",
+              "host": ["{{baseUrl}}"],
+              "path": ["conversations"]
+            }
+          },
+          "response": [{ "name": "Success", "originalRequest": {}, "status": "OK", "code": 200, "body": "{\n  \"success\": true\n}" }]
+        },
+        {
+          "name": "Get Conversation With User",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/conversations/{{userId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["conversations", "{{userId}}"]
+            }
+          },
+          "response": [{ "name": "Success", "originalRequest": {}, "status": "OK", "code": 200, "body": "{\n  \"success\": true\n}" }]
+        }
+      ]
+    },
+    {
+      "name": "Stories",
+      "item": [
+        {
+          "name": "Create Story",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"media\": \"https://example.com/story.jpg\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/stories",
+              "host": ["{{baseUrl}}"],
+              "path": ["stories"]
+            }
+          },
+          "response": [{ "name": "Success", "originalRequest": {}, "status": "Created", "code": 201, "body": "{\n  \"success\": true\n}" }]
+        },
+        {
+          "name": "Get Stories Feed",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/stories/feed",
+              "host": ["{{baseUrl}}"],
+              "path": ["stories", "feed"]
+            }
+          },
+          "response": [{ "name": "Success", "originalRequest": {}, "status": "OK", "code": 200, "body": "{\n  \"success\": true\n}" }]
+        },
+        {
+          "name": "Get User Stories",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/stories/{{userId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["stories", "{{userId}}"]
+            }
+          },
+          "response": [{ "name": "Success", "originalRequest": {}, "status": "OK", "code": 200, "body": "{\n  \"success\": true\n}" }]
+        },
+        {
+          "name": "View Story",
+          "request": {
+            "method": "POST",
+            "url": {
+              "raw": "{{baseUrl}}/stories/{{storyId}}/view",
+              "host": ["{{baseUrl}}"],
+              "path": ["stories", "{{storyId}}", "view"]
+            }
+          },
+          "response": [{ "name": "Success", "originalRequest": {}, "status": "OK", "code": 200, "body": "{\n  \"success\": true\n}" }]
+        },
+        {
+          "name": "Delete Story",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/stories/{{storyId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["stories", "{{storyId}}"]
+            }
+          },
+          "response": [{ "name": "Success", "originalRequest": {}, "status": "OK", "code": 200, "body": "{\n  \"success\": true\n}" }]
+        }
+      ]
+    },
+    {
+      "name": "Comments",
+      "item": [
+        {
+          "name": "Create Comment",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"text\": \"Nice post!\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/comments/{{postId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["comments", "{{postId}}"]
+            }
+          },
+          "response": [{ "name": "Success", "originalRequest": {}, "status": "Created", "code": 201, "body": "{\n  \"success\": true\n}" }]
+        },
+        {
+          "name": "Get Comments",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/comments/post/{{postId}}?page=1&limit=10",
+              "host": ["{{baseUrl}}"],
+              "path": ["comments", "post", "{{postId}}"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "10" }
+              ]
+            }
+          },
+          "response": [{ "name": "Success", "originalRequest": {}, "status": "OK", "code": 200, "body": "{\n  \"success\": true\n}" }]
+        },
+        {
+          "name": "Delete Comment",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/comments/{{commentId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["comments", "{{commentId}}"]
+            }
+          },
+          "response": [{ "name": "Success", "originalRequest": {}, "status": "OK", "code": 200, "body": "{\n  \"success\": true\n}" }]
+        }
+      ]
+    },
+    {
+      "name": "Reactions",
+      "item": [
+        {
+          "name": "React To Post",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"like\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/reactions/{{postId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["reactions", "{{postId}}"]
+            }
+          },
+          "response": [{ "name": "Success", "originalRequest": {}, "status": "OK", "code": 200, "body": "{\n  \"success\": true\n}" }]
+        },
+        {
+          "name": "Remove Reaction",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/reactions/{{postId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["reactions", "{{postId}}"]
+            }
+          },
+          "response": [{ "name": "Success", "originalRequest": {}, "status": "OK", "code": 200, "body": "{\n  \"success\": true\n}" }]
+        },
+        {
+          "name": "Get Reactions Summary",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/reactions/{{postId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["reactions", "{{postId}}"]
+            }
+          },
+          "response": [{ "name": "Success", "originalRequest": {}, "status": "OK", "code": 200, "body": "{\n  \"success\": true\n}" }]
+        }
+      ]
+    }
+  ]
+}

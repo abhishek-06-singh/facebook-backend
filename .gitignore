@@ -1,0 +1,58 @@
+# =========================
+# Node
+# =========================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# =========================
+# Environment
+# =========================
+.env
+.env.*
+!.env.example
+
+# =========================
+# Logs
+# =========================
+logs/
+*.log
+
+# =========================
+# OS files
+# =========================
+.DS_Store
+Thumbs.db
+
+# =========================
+# IDE
+# =========================
+.vscode/
+.idea/
+
+# =========================
+# Build / coverage
+# =========================
+dist/
+build/
+coverage/
+
+# =========================
+# Uploads / local storage
+# =========================
+uploads/
+tmp/
+temp/
+
+# =========================
+# Cache
+# =========================
+.cache/
+*.tsbuildinfo
+
+# =========================
+# Optional: Postman local env
+# =========================
+*.postman_environment.json
